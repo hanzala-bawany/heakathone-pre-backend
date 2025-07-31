@@ -47,8 +47,9 @@ export const signupController = async (req, res) => {
         age
       });
       const newUser = await userData.save()
+      const {password : _ , ...otherDetail} = newUser._doc
 
-      return successHandler(res, 200, `user register succefully`, newUser);
+      return successHandler(res, 200, `user register succefully`, otherDetail);
 
     } catch (error) {
       console.log(error, "---> registration me error he");
