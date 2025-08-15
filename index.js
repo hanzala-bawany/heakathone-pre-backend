@@ -18,7 +18,7 @@ connectDB()
 // app.use(helmet());
 // app.use(mongoSanitize());
 app.use(cors({
-  origin: "*",
+  origin: process.env.FRONTEND_URL || "*",
   credentials: true
 }))
 app.use(express.json())
