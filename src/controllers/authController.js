@@ -98,15 +98,15 @@ export const loginController = async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    res.cookie("token", token, {
-      httpOnly: true, //  < --- matlab sirf server side yani backend se hi cookie ko access/handle kia ja sakta he
-      sameSite:  process.env.NODE_ENV == "development" ? "lax" : "none"  , //  < --- yani diff origin/port sen req aengi un me cookie ko save nahi kia jae ga browser me save get and post samoeTime
-      secure: process.env.NODE_ENV == "development" ? false : true , // ⚠️ <-- alllow for only http
-    });
+    // res.cookie("token", token, {
+    //   httpOnly: true, //  < --- matlab sirf server side yani backend se hi cookie ko access/handle kia ja sakta he
+    //   sameSite: process.env.NODE_ENV === "development" ? "lax" : "none"  , //  < --- yani diff origin/port sen req aengi un me cookie ko save nahi kia jae ga browser me save get and post samoeTime
+    //   secure: process.env.NODE_ENV == "development" ? false : true , // ⚠️ <-- alllow for only http
+    // });
 
-    const {password : _ , ...otherDetail} = isExist?._doc
-    // console.log("login in  successfully", isExist);
-    successHandler(res, 200, "User login successfully", otherDetail);
+    // const {password : _ , ...otherDetail} = isExist?._doc
+    console.log("login in  successfully",isExist?._doc);
+    successHandler(res, 200, "User login successfully", token);
 
   } catch (err) {
     console.log(err, "loginUser me error he");
