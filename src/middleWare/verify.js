@@ -6,13 +6,13 @@ export const verifyToken = async (req, res, next) => {
 
     try {
 
-        console.log(req, "<------ console req");
+        // console.log(req, "<------ console req");
         const token = req?.cookies?.token || req?.headers?.authorization?.split(" ")[1]
-        console.log(token, "<---- token")
+        // console.log(token, "<---- token")
         if (!token) return errorHandler(res, 404, "token not found")
 
         const isTokenValid = verify(token, process.env.JWT_secretKey);
-        console.log(isTokenValid, "----> login wale user ka token wala data");
+        // console.log(isTokenValid, "----> login wale user ka token wala data");
 
         req.loginUser = { ...isTokenValid }
         // console.log(req.loginUser, "---> token ke waqt dia hua data");
@@ -21,16 +21,18 @@ export const verifyToken = async (req, res, next) => {
     }
     catch (error) {
 
+        console.log(error, "---> token verification error")
+        
         if (error?.name === "TokenExpiredError" || error?.name === "JsonWebTokenError") {
             //   res.clearCookie("token", {
             //     httpOnly: true,
             //     sameSite: "lax",
             //     secure: false
             //   })
-            return errorHandler(res, 402, "Invalid or expired token")
+            console.log("invalid token or expires token");
+            return errorHandler(res, 401, "Invalid User")
         }
 
-        console.log(error, "---> token verification error")
         return errorHandler(res, 500, "Server error during token verification")
     }
 
@@ -55,7 +57,7 @@ export const verifyAdmin = async (req, res, next) => {
     try {
 
         const { isAdmin } = req.loginUser
-        if (!isAdmin) errorHandler(res, 404, "you are not able to req this . only admin can do this")
+        if (!isAdmin) errorHandler(res, 404, "Only admin can access")
         next()
 
     }
