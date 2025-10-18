@@ -86,6 +86,7 @@ export const loginController = async (req, res) => {
     if (!isExist) return errorHandler(res, 402, "User not found");
 
     const comparePass = await compare(password, isExist?.password);
+    console.log(comparePass , "<<<<<<<<<<");
     if (!comparePass) return errorHandler(res, 404, "invalid password");
 
     const token = sign(

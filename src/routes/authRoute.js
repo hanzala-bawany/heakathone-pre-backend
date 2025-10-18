@@ -6,6 +6,7 @@ const authRoutes = express.Router()
 
 
 authRoutes.post("/signup"  ,signupController)
-authRoutes.post("/login" , rateLimit( 60*1000 , 5 ,"Too many login attempts, try again later.") , loginController)
+authRoutes.post("/login" , loginController)
+// authRoutes.post("/login" , rateLimit( 60*1000 , 5 ,"Too many login attempts, try again later.") , loginController)
 
 export {authRoutes}
